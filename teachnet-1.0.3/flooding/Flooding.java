@@ -1,10 +1,8 @@
 import teachnet.algorithm.BasicAlgorithm;
 
 import java.awt.Color;
-import java.util.Random;
-import java.util.HashMap;
 
-public class FloodingAlgorithm extends BasicAlgorithm
+public class Flooding extends BasicAlgorithm
 {
     int markInterface = -1;
 
@@ -29,29 +27,30 @@ public class FloodingAlgorithm extends BasicAlgorithm
             initial = true;
             informed = true;
             for (int i = 0; i < checkInterfaces(); ++i) {
-                send(i, "rumor");
+                send(i, new Rumor());
             }
             updateView();
         }
-    public void receive(int interf, Object msgObject)
+    public void receive(int interf, Object message)
         {
-            String msg = (String) msgObject;
-            if (msg == "rumor") {
+            if (message instanceof Rumor) {
+                Rumor rumorMsg = (Rumor) message;
                 if (! informed && ! initial) {
                     for (int i = 0; i < checkInterfaces(); ++i) {
                         if (i != interf) {
-                            send(i, "rumor");
+                            send(i, rumorMsg);
                         }
                     }
                     informed = true;
                     rumorOrigin = interf;
                 } else {
-                    send(interf, "confirmation");
+                    send(interf, new Confirmation());
                 }
-            } else if (msg == "confirmation") {
+            } else if (message instanceof Confirmation) {
+                Confirmation confirmationMsg = (Confirmation) message;
                 count = count + 1;
                 if (! initial && count >= checkInterfaces() - 1) {
-                    send(rumorOrigin, "confirmation");
+                    send(rumorOrigin, confirmationMsg);
                     confirmed = true;
                 }
                 if (initial && count == checkInterfaces()) {

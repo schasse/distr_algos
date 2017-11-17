@@ -26,7 +26,7 @@ delay.min=java.lang.Double:0.8
 delay.max=java.lang.Double:2.0
 
 [stack.algorithms]
-FloodingAlgorithm
+Flooding
 
 [stack.configs]
 0.node.id=java.lang.String:$node.id
