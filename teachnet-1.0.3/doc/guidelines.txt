@@ -1,0 +1,44 @@
+HOW TO PREPARE YOUR SUBMISSION:
+===============================
+
+a) Implement the given exercises
+b) Make sure your java-files are compilable
+c) Make sure you have the correct configurations
+d) Properly structure your submission:
+
+for example:
+
+OPTION_1:
+
+assignment1
+	|- flooding
+		|- myconfig.txt
+		|- Flooding.java
+		|- *.java
+	|- echo
+		|- myconfig.txt
+		|- Echo.java
+		|- *.java
+
+OPTION_2:
+
+assignment1
+	|- flooding-config.txt
+	|- echo-config.txt
+	|- Flooding.java
+	|- Echo.java
+	|- *.java
+
+
+
+WHAT SHOULD BE PART OF THE SUBMISSION
+=====================================
+
+a) the configuration file (myconfig.txt)
+b) your source code/algorithms files (*.java)
+
+
+WHAT SHOULD NOT(!) BE PART OF THE SUBMISSION
+============================================
+
+a) the entire teachnet (teachnet.jar)
