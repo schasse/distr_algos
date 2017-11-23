@@ -1,0 +1,40 @@
+[graph.random]
+# teachnet.util.RandomConnectedGraphGenerator
+# n=java.lang.Integer:10
+# e=java.lang.Integer:30
+
+teachnet.util.RandomTreeGraphGenerator
+h=java.lang.Integer:3
+min=java.lang.Integer:3
+max=java.lang.Integer:5
+
+# teachnet.util.RandomRingGenerator
+# n=java.lang.Integer:10
+
+
+# teachnet.util.FullyMeshedGraphGenerator
+# n=java.lang.Integer:5
+
+# teachnet.util.HypercubeGenerator
+# d=java.lang.Integer:3
+
+# teachnet.util.GridGenerator
+# y=java.lang.Integer:3
+# y=java.lang.Integer:5
+
+# teachnet.util.SquareGridGenerator
+# l=java.lang.Integer:5
+
+[network]
+teachnet.network.LinearDelayNetwork
+delay.min=java.lang.Double:0.8
+delay.max=java.lang.Double:2.0
+
+[stack.algorithms]
+Flooding
+
+[stack.configs]
+0.node.id=java.lang.String:$node.id
+
+[inits]
+0,0,0.0
