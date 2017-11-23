@@ -79,7 +79,8 @@ public class Flooding extends BasicAlgorithm
         }
     private void updateView()
     // this method updates the node's display depending on its state
-        {
+    // it is called after each action (setup, initiate, receive)
+       {
             if (informed) {
                 color = Color.RED;
             }
