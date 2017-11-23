@@ -1,19 +1,19 @@
 import java.awt.Color;
 import teachnet.view.renderer.Shape;
 
-public class Confirmation {
-    Color color = Color.GREEN;
-    Shape shape = Shape.RHOMBUS;
+public class Explorer {
+    Color color = Color.RED;
+    Shape shape = Shape.CIRCLE;
     static int counter = 0;
     int id;
 
-    public Confirmation()
+    public Explorer()
         {
             this.counter++;
             id = counter;
         }
     public String toString()
         {
-            return "confirmation";
+            return "explorer";
         }
 }
