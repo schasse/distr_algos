@@ -56,6 +56,7 @@ public class Echo extends BasicAlgorithm
             if (count == checkInterfaces()) {
                 if (! initial) {
                     send(explorerOrigin, new EchoMsg());
+                    markInterface = explorerOrigin;
                 }
                 confirmed = true;
             }
