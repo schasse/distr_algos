@@ -25,6 +25,7 @@ public class Echo extends BasicAlgorithm
     int count = 0;
     // the interface, from which the explorer came from
     int explorerOrigin;
+    // ids of the node's neighbors
     Set<Integer> neighbors = new HashSet<Integer>();
 
     public void setup(java.util.Map<String, Object> config)
@@ -39,7 +40,44 @@ public class Echo extends BasicAlgorithm
                 neighbors.add(left);
                 neighbors.add(right);
             }
-            // System.out.println("" + id + ": [" + neighbors[0] + ", " + neighbors[1] + "]");
+            if (config.get("topology").equals("binxtree")) {
+                // here we calculate the neighbors of binxtree topology with h=3
+                if (id == 0) {
+                    neighbors.add(1);
+                    neighbors.add(2);
+                }
+                if (id == 1) {
+                    neighbors.add(0);
+                    neighbors.add(2);
+                    neighbors.add(3);
+                    neighbors.add(4);
+                }
+                if (id == 2) {
+                    neighbors.add(0);
+                    neighbors.add(1);
+                    neighbors.add(5);
+                    neighbors.add(6);
+                }
+                if (id == 3) {
+                    neighbors.add(1);
+                    neighbors.add(4);
+                }
+                if (id == 4) {
+                    neighbors.add(1);
+                    neighbors.add(3);
+                    neighbors.add(5);
+                }
+                if (id == 5) {
+                    neighbors.add(2);
+                    neighbors.add(4);
+                    neighbors.add(6);
+                }
+                if (id == 6) {
+                    neighbors.add(2);
+                    neighbors.add(5);
+                }
+            }
+            // System.out.println("" + id + ": " + neighbors);
             updateView();
         }
     public void initiate()
@@ -67,7 +105,7 @@ public class Echo extends BasicAlgorithm
                 newTaboo.addAll(taboo);
                 newTaboo.addAll(neighbors);
 
-                // send explorer to all neighbors except the once in
+                // send explorer to all neighbors except the ones in
                 // the taboo set
                 Iterator neighborIterator = neighbors.iterator();
                 while (neighborIterator.hasNext()) {
