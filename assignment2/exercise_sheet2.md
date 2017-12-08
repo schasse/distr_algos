@@ -11,11 +11,34 @@ Winter term 2017/18, Danh Le Phuoc & Qian Liu, ODS
 
 i. Describe the Bully Algorithm
 
+The bully algorithm requires at least a unidirectional ring
+topology. Every node wakes up either as an initiator or when it
+receives a message. Those messages are the starts of circular chains
+among all the nodes. Within a circular chain of messages the algorithm
+determines the node with the largest id. At the end of a circle, the
+circle initiator receives its own id and the largest id. The own id
+indicates that he started the circle. The largest id indicates the
+winner of the election.
+
 ii. How many messages are passed for a leader election with the bully
 algorithm
 
+Each of the n nodes starts a circle of messages and one circle of
+messages consists of n messages. This is n^^2 messages in total.
+
 iii. The Bully Algorithm is an example for a leader election. Give
 examples of applications that need a unique leader.
+
+Databases often implement replication in the master/slave fashion. In
+case the master dies, we need a failover. This is where the election
+algorithm comes into play.
+
+The lecture slides says:
+– Determining the monitor station of Token-Ring-LANs
+– Generating a unique token
+– Determining the root node of a spanning tree
+– Determining the master in distributed files systems or centralized mutual
+exclusion
 
 #### Exercise 1.2: Election
 
@@ -66,7 +89,9 @@ i. Lamport
 The broadcast algorithm (Lamport, 1978) has been introduced in the
 lecture. The algorithm requires FIFO channels. Assume, we drop this
 precondition. Construct an example in which the algorithm does not
-work properly anymore.ii.  Ricart and Agrawala
+work properly anymore.
+
+ii. Ricart and Agrawala
 
 1. Is this algorithm deadlock-free? Give a reasonable answer.
 
