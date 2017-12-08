@@ -11,7 +11,7 @@ def print_usage
 end
 
 def available_algorithms
-  Dir['assignment1/*'].map { |file| File.basename file }
+  Dir['assignment2/*'].map { |file| File.basename file }
 end
 
 def available_configs
@@ -28,13 +28,13 @@ print_usage && exit(1) if !config.nil? && !available_configs.include?(config)
 
 config_path =
   if config.nil?
-    "assignment1/#{algorithm}/myconfig.txt"
+    "assignment2/#{algorithm}/myconfig.txt"
   else
     "teachnet-1.0.3/configs/#{config}.txt"
   end
 
 print_and_run 'java'\
               ' -jar teachnet-1.0.3/teachnet.jar'\
-              "  --cp assignment1/#{algorithm}"\
+              " --cp assignment2/#{algorithm}"\
               " --config #{config_path}"\
               ' --compile'
