@@ -11,11 +11,34 @@ Winter term 2017/18, Danh Le Phuoc & Qian Liu, ODS
 
 i. Describe the Bully Algorithm
 
+The bully algorithm requires at least a unidirectional ring
+topology. Every node wakes up either as an initiator or when it
+receives a message. Those messages are the starts of circular chains
+among all the nodes. Within a circular chain of messages the algorithm
+determines the node with the largest id. At the end of a circle, the
+circle initiator receives its own id and the largest id. The own id
+indicates that he started the circle. The largest id indicates the
+winner of the election.
+
 ii. How many messages are passed for a leader election with the bully
 algorithm
 
+Each of the n nodes starts a circle of messages and one circle of
+messages consists of n messages. This is n^^2 messages in total.
+
 iii. The Bully Algorithm is an example for a leader election. Give
 examples of applications that need a unique leader.
+
+Databases often implement replication in the master/slave fashion. In
+case the master dies, we need a failover. This is where the election
+algorithm comes into play.
+
+The lecture slides says:
+– Determining the monitor station of Token-Ring-LANs
+– Generating a unique token
+– Determining the root node of a spanning tree
+– Determining the master in distributed files systems or centralized mutual
+exclusion
 
 #### Exercise 1.2: Election
 
@@ -66,13 +89,33 @@ i. Lamport
 The broadcast algorithm (Lamport, 1978) has been introduced in the
 lecture. The algorithm requires FIFO channels. Assume, we drop this
 precondition. Construct an example in which the algorithm does not
-work properly anymore.ii.  Ricart and Agrawala
+work properly anymore.
+
+In the slides: message 6 includes the queue of process 1?
+
+What is a lossless FIFO channel exactly? Does it either mean we have a
+synchronized clock or does it mean we do not lose any message.
+
+solution idea: lose a message vs. delay a message for a long time, so
+that the synchronized clock is violated.
+
+ii. Ricart and Agrawala
 
 1. Is this algorithm deadlock-free? Give a reasonable answer.
 
+It is deadlock-free because in case multiple nodes start with their
+first message, the algorithms assumes a priority for the node with the
+lowest id. So this is the tiebreaker otherwise we would have a
+deadlock situation, in which each node would wait for a confirmation
+and end in a deadlock.
+
 2. Modify the broadcast algorithm of Ricart and Agrawala such that (at
-maxi- mum) k2N processes are able to enter the critical section
-instead of just one.
+maximum) 2 processes are able to enter the critical section instead of
+just one.
+
+The idea is as follows: When we change the required confirmations from
+n to n-1, then two nodes at maximum are able to access the resource at
+the same time.
 
 iii. Maekawa
 
@@ -82,6 +125,15 @@ edge length of n. Consider a situation where this assumption is not
 given (n is not a square number). Is it still feasible to use the
 algorithm?
 
+The algorithm is still feasible in case it is not a quadratic
+mesh. The assumption that all pairs of nodes have two processes in
+common is still true. The disadvantage though in a non quadratic mesh
+is that the granting set for each node becomes bigger and the
+algorithm does not save that many messages.
+
+Example: Consider a set of 16 nodes. For a quadratic mesh we would
+have a granting set for each node of only 6 nodes. For a 8x2 mesh we
+would have a granting set of 8 nodes.
 
 Additional notes and assessment:
 
