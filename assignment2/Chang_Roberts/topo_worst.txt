@@ -9,7 +9,7 @@
 # max=java.lang.Integer:5
 
 teachnet.util.RandomRingGenerator
-n=java.lang.Integer:5
+n=java.lang.Integer:10
 
 
 # teachnet.util.FullyMeshedGraphGenerator

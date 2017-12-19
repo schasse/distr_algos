@@ -1,0 +1,4 @@
+Dear Sebastian,
+I implemented chang roberts algorithm, bud i didn't know how to edit topology and make best_topo and worst_topo. Could you do it? Best topo should be a ring with decreasing ID order, while worst topo should have increasing ID order. My solution is based on your bully alg, although edited so that nodes who don't have a chance dont participate in the election.
+
+Best Kosta
