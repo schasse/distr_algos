@@ -1,7 +1,7 @@
 import teachnet.algorithm.BasicAlgorithm;
 import java.awt.Color;
 
-public class Bully extends BasicAlgorithm
+public class chang_roberts extends BasicAlgorithm
 {
     // caption and color appear in the view
     String caption;
@@ -28,16 +28,26 @@ public class Bully extends BasicAlgorithm
         }
     public void receive(int interf, Object message)
         {
-            if (!initiated) {
-                initiate();
-            }
             if (message instanceof Integer) {
                 int receivedMax = (int) message;
+
+                if (!initiated) {
+            		if (receivedMax < id)  // it ismportant to send highest ID
+            			initiate();
+                	else {				   // redundant to send ID if no chance to win
+                		max = id;
+            			initiated = true;
+                	}
+            	}
+
                 if (receivedMax > max) {
+
+                	// if a received max is higher than mine, send received
                     max = receivedMax;
-                    // send new max to next node
                     send(0, max);
                 }
+
+                // if the the message has made a full circle it won
                 if (receivedMax == id) {
                     // inform by a ring circuit
                     send(0, "" + max);
@@ -50,7 +60,7 @@ public class Bully extends BasicAlgorithm
                     // the confirmation
                     send(0, confirmedMaster);
                 }
-            }
+            } 
             updateView();
         }
     private void updateView()
