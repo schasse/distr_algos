@@ -21,8 +21,6 @@ public class chang_roberts extends BasicAlgorithm
         {
             max = id;
             initiated = true;
-
-            // send max to next node
             send(0, max);
             updateView();
         }
@@ -32,9 +30,15 @@ public class chang_roberts extends BasicAlgorithm
                 int receivedMax = (int) message;
 
                 if (!initiated) {
-            		if (receivedMax < id)  // it ismportant to send highest ID
-            			initiate();
-                	else {				   // redundant to send ID if no chance to win
+            		if (receivedMax < id){  // it ismportant to send highest ID
+                        max = id;
+                        initiated = true;
+                        for (int i = 0; i < checkInterfaces(); ++i) {
+                            if(i!= interf){
+                                send(i, max);
+                            }
+                        }
+                	} else {				   // redundant to send ID if no chance to win
                 		max = id;
             			initiated = true;
                 	}
@@ -44,24 +48,38 @@ public class chang_roberts extends BasicAlgorithm
 
                 	// if a received max is higher than mine, send received
                     max = receivedMax;
-                    send(0, max);
+                    for (int i = 0; i < checkInterfaces(); ++i) {
+                        if(i!= interf){
+                            send(i, max);
+                        }
+                    }
                 }
 
                 // if the the message has made a full circle it won
                 if (receivedMax == id) {
                     // inform by a ring circuit
-                    send(0, "" + max);
+                    for (int i = 0; i < checkInterfaces(); ++i) {
+                        if(i != interf){
+                            send(i, "" + max);
+                        }
+                    }                            
                 }
-            }
+            
             if (message instanceof String) {
                 confirmedMaster = (String) message;
                 if (!confirmedMaster.equals("" + id)) {
                     // this node is not the elected master and pass on
                     // the confirmation
-                    send(0, confirmedMaster);
+                    
+                    for (int i = 0; i < checkInterfaces(); ++i) {
+                        if(i != interf){
+                            send(i, confirmedMaster);
+                        }
+                    }
                 }
-            } 
+             }
             updateView();
+            }
         }
     private void updateView()
     // this method updates the node's display depending on its state.
