@@ -120,12 +120,19 @@ lecture given the following scenarios:
 1. Worst-Case: Configure your topology that it reflects the worst-case
 scenario.
 
+Worst case scenario is a ring topology where nodes are aranged in increasing order, because each node would reinitiate elections, as can be seen from the simulation with topology topo_worst.txt 
+
 2. Best-Case: Configure your topology that it reflects the best-case
    scenario.
+
+Best case scenario is the situation where ring is configured in the descending order. This implies that upon initiation, following nodes
+will have ID's less then the initiator, whus wont reinitiate. This is exampled in simulation with topo_best.txt.
 
 3. Average-Case: Configure your topology that it randomly assigns node
 IDs and examine the average message complexity calculated over several
 runs.
+
+The complexity depends on the tradeof between ascending and descending order of nodes in the ring. Different ddscenarios result in different initial node configurations, as can be seen from simulation with topo_avg.txt
 
 ii. Implement the Hirschberg-Sinclair-Election Algorithm on
 bidirectional rings.  Evaluate your implementation with a ring of 16
