@@ -34,7 +34,7 @@ winner of the election.
 Figure 1(a) depicts above-adressed message circle, while Figure 1(b) depicts the
 block diagram of deciding algorithm.
 
-$#@$#@$ add figure!
+$#@$#@$ add figure1-a and figure 1-b
 
 ii. How many messages are passed for a leader election with the bully
 algorithm
