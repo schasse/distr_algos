@@ -34,11 +34,15 @@ winner of the election.
 Figure 1(a) depicts above-adressed message circle, while Figure 1(b) depicts the
 block diagram of deciding algorithm.
 
-![](Figures/fig1a.png)
-Figure 1(a)
+<p style="text-align:center;">
+    <img src="Figures/fig1a.png" style="width:50%;">
+    Figure 1(a)
+</p>
 
-![](Figures/fig1b.png)
-Figure 1(b)
+<p style="text-align:center;">
+    <img src="Figures/fig1b.png" style="width:50%">
+    Figure 1(b)
+</p>
 
 ii. How many messages are passed for a leader election with the bully
 algorithm
@@ -52,8 +56,10 @@ message circles. However, this does not optimize the worst case complexity of an
 Consider Figure 2. If the nodes are aranged in accending order with regards to their ID,
 even optimized algorithm wit have O(N^2) complexity measure.
 
-![](Figures/fig2.png)
-Figure 2
+<p style="text-align:center;">
+    <img src="Figures/fig2.png" style="width:50%">
+    Figure 2
+</p>
 
 iii. The Bully Algorithm is an example for a leader election. Give
 examples of applications that need a unique leader.
@@ -96,14 +102,20 @@ algorithm. In this case a node with higher ID will initiate elections and all lo
 Second, there can be a node with higher ID between the nodes with same IDs. In this situation, higher node would "break the draw". Assume that node C on Figure 3(c) initiated the elections. Node D would win, regardless of the multiple assignments.
 Another case would be to disregard the "draw problem". We can introduce the aditional constraints. If a node didn't participate in the elections, and receives a message with it's ID, that doesn't make him a leader. However, it forwards the message maintaining the flow. If we have a draw, the first node to receive it's number wins. With this, we can achieve that a lower node can't beat the higher node, and when there are multiple highest nodes in the graph, the winner is determined by relative distance to the elections initiator.
 
-![](Figures/fig3a.png)
-Figure 3(a)
+<p style="text-align:center;">
+    <img src="Figures/fig3a.png" style="width:50%">
+    Figure 3(a)
+</p>
 
-![](Figures/fig3b.png)
-Figure 3(b)
+<p style="text-align:center;">
+    <img src="Figures/fig3b.png" style="width:50%">
+    Figure 3(b)
+</p>
 
-![](Figures/fig3c.png)
-Figure 3(c)
+<p style="text-align:center;">
+    <img src="Figures/fig3c.png" style="width:50%">
+    Figure 3(c)
+</p>
 
 ii. Derive the time complexity of the Hirschberg-Sinclair election
 algorithm in the unite time complexity model. (You can assume that all
@@ -204,15 +216,19 @@ common is still true. The disadvantage though in a non quadratic mesh
 is that the granting set for each node becomes bigger and the
 algorithm does not save that many messages.
 
-![](Figures/fig4a.png)
-Figure 4a
+<p style="text-align:center;">
+    <img src="Figures/fig4a.png" style="width:50%">
+    Figure 4a
+</p>
 
 Example: Consider a set of 16 nodes. For a quadratic mesh we would
 have a granting set for each node of only 6 nodes. For a 8x2 mesh we
 would have a granting set of 8 nodes.
 
-![](Figures/fig4b.png)
-Figure 4b
+<p style="text-align:center;">
+    <img src="Figures/fig4b.png" style="width:50%">
+    Figure 4b
+</p>
 
 Additional notes and assessment:
 
