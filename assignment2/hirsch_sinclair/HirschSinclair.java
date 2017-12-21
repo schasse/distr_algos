@@ -1,7 +1,7 @@
 import teachnet.algorithm.BasicAlgorithm;
 import java.awt.Color;
 
-public class hirsch_sinclair extends BasicAlgorithm
+public class HirschSinclair extends BasicAlgorithm
 {
     // caption and color appear in the view
     String caption;
@@ -43,16 +43,16 @@ public class hirsch_sinclair extends BasicAlgorithm
             updateView();
         }
     public void receive(int interf, Object message)
-        {	
-        	if(!initiated){
-            	initiated = true;
-            	active = true;
+        {
+            if(!initiated){
+                initiated = true;
+                active = true;
                 keep_alive = 1;
                 updateView();
-       		}
+            }
 
-        	int receivedID = (int) message;
-        	if (receivedID == id){
+            int receivedID = (int) message;
+            if (receivedID == id){
                 explorers_sent --;
                 if (explorers_sent == 0){
                     if(keep_alive != 0){
@@ -63,49 +63,49 @@ public class hirsch_sinclair extends BasicAlgorithm
                         keep_alive = 0;
                     } else{
                         winner = id;
-                        color = Color.RED; 
-                    }     
+                        color = Color.RED;
+                    }
                 }
-        	} else if (receivedID == -1) {
-        		// go to passive state
+            } else if (receivedID == -1) {
+                // go to passive state
                 color = Color.BLUE;
-        		active = false;
+                active = false;
 
-        	} else {
-	        	if (active){
-	        		// if received ID is bigger, inform the node that he won, and go to passive state
-	        		if (receivedID > id){
-	        			active = false;
+            } else {
+                if (active){
+                    // if received ID is bigger, inform the node that he won, and go to passive state
+                    if (receivedID > id){
+                        active = false;
                         color = Color.BLUE;
-	        			send(interf, receivedID);
+                        send(interf, receivedID);
                         winner = receivedID;
-	        		} else {
-	        		// if the received ID is lower, inform the node that he lost
-	        			active = true;
+                    } else {
+                        // if the received ID is lower, inform the node that he lost
+                        active = true;
                         keep_alive = 1;
                         if (explorers_sent == 0){
                             for (int i = 0; i < checkInterfaces(); ++i) {
                                 if(i != interf)
                                     send(i, id);
                             }
-                            explorers_sent = 1;                            
+                            explorers_sent = 1;
                         }
 
-	        			send(interf,-1);
-	        		}	
-	        	} else {  // pure data forwarding
-	        		for (int i = 0; i < checkInterfaces(); ++i) {
-	        			if (i != interf)
-	                		send(i, receivedID);
-	            	}
+                        send(interf,-1);
+                    }
+                } else {  // pure data forwarding
+                    for (int i = 0; i < checkInterfaces(); ++i) {
+                        if (i != interf)
+                            send(i, receivedID);
+                    }
                     winner = receivedID;
-	        	}
-        	}
+                }
+            }
             updateView();
         }
     private void updateView(){
-    // this method updates the node's display depending on its state.
-    // it is called after each action (setup, initiate, receive)
-            caption = "#: " + id +"winner: "+ winner;
-        }
+        // this method updates the node's display depending on its state.
+        // it is called after each action (setup, initiate, receive)
+        caption = "#: " + id +"winner: "+ winner;
+    }
 }

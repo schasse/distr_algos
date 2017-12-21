@@ -1,20 +1,4 @@
-[graph]
-# ring
-
-10
-
-0,1-1,0
-1,5-5,1
-5,3-3,5
-3,4-4,3
-4,6-6,4
-2,6-6,2
-2,8-8,2
-7,8-8,7
-7,9-9,7
-9,0-0,9
-
-# [graph.random]
+[graph.random]
 # teachnet.util.RandomConnectedGraphGenerator
 # n=java.lang.Integer:10
 # e=java.lang.Integer:30
@@ -24,8 +8,8 @@
 # min=java.lang.Integer:3
 # max=java.lang.Integer:5
 
-# teachnet.util.RandomRingGenerator
-# n=java.lang.Integer:10
+teachnet.util.RandomRingGenerator
+n=java.lang.Integer:17
 
 
 # teachnet.util.FullyMeshedGraphGenerator
@@ -47,7 +31,7 @@ delay.min=java.lang.Double:0.8
 delay.max=java.lang.Double:2.0
 
 [stack.algorithms]
-hirsch_sinclair
+HirschSinclair
 
 [stack.configs]
 0.node.id=java.lang.String:$node.id
