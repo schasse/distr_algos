@@ -5,7 +5,7 @@ public class ChangRoberts extends BasicAlgorithm
 {
     // caption and color appear in the view
     String caption;
-    Color color = Color.WHITE;
+    Color color;
 
     int id;
     int max = -1;
@@ -85,6 +85,9 @@ public class ChangRoberts extends BasicAlgorithm
     // this method updates the node's display depending on its state.
     // it is called after each action (setup, initiate, receive)
     {
+        if (null == confirmedMaster) {
+            color = Color.WHITE;
+        }
         if (null != confirmedMaster) {
             color = Color.GREEN;
         }
