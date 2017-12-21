@@ -26,8 +26,9 @@ public class ChangRoberts extends BasicAlgorithm
                 id = nodeCount - configId - 1;
             }
             if (scenario.equals("averagecase")) {
-                // id = (random * configId + 1) % nodeCount;
-                // System.out.println("" + random + " " + configId + " " + id);
+                // LOL, i roled the dice and figured out this random number
+                int random = (int) (0.34000319169778204 * nodeCount) + 1;
+                id = ((random * configId) + 1) % nodeCount;
             }
             max = id;
             updateView();
