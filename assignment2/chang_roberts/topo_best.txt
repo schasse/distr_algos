@@ -3,6 +3,7 @@
 
 10
 
+0-9
 9-8
 8-7
 7-6
@@ -12,7 +13,7 @@
 3-2
 2-1
 1-0
-0-9
+
 
 # [graph.random]
 # teachnet.util.RandomConnectedGraphGenerator
@@ -47,7 +48,7 @@ delay.min=java.lang.Double:0.8
 delay.max=java.lang.Double:2.0
 
 [stack.algorithms]
-chang_roberts
+ChangRoberts
 
 [stack.configs]
 0.node.id=java.lang.String:$node.id
