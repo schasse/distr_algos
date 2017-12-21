@@ -176,13 +176,16 @@ lecture. The algorithm requires FIFO channels. Assume, we drop this
 precondition. Construct an example in which the algorithm does not
 work properly anymore.
 
-In the slides: message 6 includes the queue of process 1?
+In our example we drastically delay the message of P1 with timestamp 1.
+The message of P1 with timestamp 3 arrives prior. This is the actual
+FIFO violation. P2 is not aware of P1 request with a timestamp smaller 3
+and accesses the resource, which would not be allowed.
 
-What is a lossless FIFO channel exactly? Does it either mean we have a
-synchronized clock or does it mean we do not lose any message.
+<p style="text-align:center;">
+    <img src="Figures/fig4a.png" style="width:50%">
+    Figure 4a
+</p>
 
-solution idea: lose a message vs. delay a message for a long time, so
-that the synchronized clock is violated.
 
 ii. Ricart and Agrawala
 
@@ -217,8 +220,8 @@ is that the granting set for each node becomes bigger and the
 algorithm does not save that many messages.
 
 <p style="text-align:center;">
-    <img src="Figures/fig4a.png" style="width:50%">
-    Figure 4a
+    <img src="Figures/fig4b.png" style="width:50%">
+    Figure 4b
 </p>
 
 Example: Consider a set of 16 nodes. For a quadratic mesh we would
@@ -226,8 +229,8 @@ have a granting set for each node of only 6 nodes. For a 8x2 mesh we
 would have a granting set of 8 nodes.
 
 <p style="text-align:center;">
-    <img src="Figures/fig4b.png" style="width:50%">
-    Figure 4b
+    <img src="Figures/fig4c.png" style="width:50%">
+    Figure 4c
 </p>
 
 Additional notes and assessment:
