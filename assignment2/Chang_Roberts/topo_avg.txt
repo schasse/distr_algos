@@ -11,7 +11,6 @@
 teachnet.util.RandomRingGenerator
 n=java.lang.Integer:10
 
-
 # teachnet.util.FullyMeshedGraphGenerator
 # n=java.lang.Integer:5
 

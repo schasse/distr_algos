@@ -30,7 +30,7 @@ public class chang_roberts extends BasicAlgorithm
                 int receivedMax = (int) message;
 
                 if (!initiated) {
-            		if (receivedMax < id){  // it ismportant to send highest ID
+            		if (receivedMax < id){  // it important to send highest ID
                         max = id;
                         initiated = true;
                         for (int i = 0; i < checkInterfaces(); ++i) {
