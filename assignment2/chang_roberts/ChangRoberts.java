@@ -1,8 +1,7 @@
 import teachnet.algorithm.BasicAlgorithm;
-
 import java.awt.Color;
 
-public class Bully extends BasicAlgorithm
+public class ChangRoberts extends BasicAlgorithm
 {
     // caption and color appear in the view
     String caption;
@@ -13,23 +12,23 @@ public class Bully extends BasicAlgorithm
     String confirmedMaster;
     Boolean initiated = false;
 
-    public static int nodeCount = 5;
-    public static int random = (int) (Math.random() * nodeCount) + 1;
-
     public void setup(java.util.Map<String, Object> config)
         {
+            id = (int) config.get("node.id");
             int configId = (int) config.get("node.id");
+            int nodeCount = (int) config.get("nodecount");
             String scenario = (String) config.get("scenario");
-            if (scenario.equals("worstcase")) {
-                // reverse order
-                id = nodeCount - configId - 1;
-            }
             if (scenario.equals("bestcase")) {
                 id = configId;
             }
+            if (scenario.equals("worstcase")) {
+                // ids in reverse order
+                id = nodeCount - configId - 1;
+            }
             if (scenario.equals("averagecase")) {
-                id = (random * configId + 1) % nodeCount;
-                System.out.println("" + random + " " + configId + " " + id);
+                // LOL, i roled the dice and figured out this random number
+                int random = (int) (0.34000319169778204 * nodeCount) + 1;
+                id = ((random * configId) + 1) % nodeCount;
             }
             max = id;
             updateView();
@@ -45,15 +44,19 @@ public class Bully extends BasicAlgorithm
         {
             if (message instanceof Integer) {
                 int receivedMax = (int) message;
+                if (receivedMax < max) {
+                    // we determined the initiator cannot win. since
+                    // only initiators can win, let's make this last
+                    // node (with a larger id) the new initiator.
+                    if (!initiated) { initiate(); }
+                }
                 if (receivedMax > max) {
                     max = receivedMax;
                     // send new max to next node
                     send(0, max);
-                } else {
-                    if (!initiated) { initiate(); }
                 }
                 if (receivedMax == id) {
-                    // inform by a ring circuit
+                    // this node wins and informs by a ring circuit
                     send(0, "" + max);
                 }
             }
@@ -70,9 +73,10 @@ public class Bully extends BasicAlgorithm
     private void updateView()
     // this method updates the node's display depending on its state.
     // it is called after each action (setup, initiate, receive)
-         {
-            if (null == confirmedMaster) {
-                color = Color.WHITE;
+        {
+            color = Color.WHITE;
+            if (initiated) {
+                color = Color.GRAY;
             }
             if (null != confirmedMaster) {
                 color = Color.GREEN;

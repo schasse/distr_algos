@@ -9,7 +9,7 @@
 # max=java.lang.Integer:5
 
 teachnet.util.RandomRingGenerator
-n=java.lang.Integer:5
+n=java.lang.Integer:17
 
 
 # teachnet.util.FullyMeshedGraphGenerator
@@ -31,10 +31,12 @@ delay.min=java.lang.Double:0.8
 delay.max=java.lang.Double:2.0
 
 [stack.algorithms]
-Bully
+HirschSinclair
 
 [stack.configs]
 0.node.id=java.lang.String:$node.id
+0.network.size=java.lang.String:$network.size
+0.topology=java.lang.String:ring
 
 [inits]
 0,0,0.0

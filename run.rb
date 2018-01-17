@@ -1,7 +1,7 @@
 #!/usr/bin/env ruby
 
-algorithm = ARGV[0]
-config = ARGV[1]
+@algorithm = ARGV[0]
+@config = ARGV[1] || 'myconfig'
 
 def print_usage
   puts 'Usage: ./run.rb ALGORITHM [CONFIG]'
@@ -15,7 +15,7 @@ def available_algorithms
 end
 
 def available_configs
-  Dir['teachnet-1.0.3/configs/*'].map { |file| File.basename file, '.*' }
+  Dir["assignment2/#{@algorithm}/*.txt"].map { |file| File.basename file, '.*' }
 end
 
 def print_and_run(cmd)
@@ -23,18 +23,11 @@ def print_and_run(cmd)
   system cmd
 end
 
-print_usage && exit(1) unless available_algorithms.include? algorithm
-print_usage && exit(1) if !config.nil? && !available_configs.include?(config)
-
-config_path =
-  if config.nil?
-    "assignment2/#{algorithm}/myconfig.txt"
-  else
-    "teachnet-1.0.3/configs/#{config}.txt"
-  end
+print_usage && exit(1) unless available_algorithms.include? @algorithm
+print_usage && exit(1) if !@config.nil? && !available_configs.include?(@config)
 
 print_and_run 'java'\
               ' -jar teachnet-1.0.3/teachnet.jar'\
-              " --cp assignment2/#{algorithm}"\
-              " --config #{config_path}"\
+              " --cp assignment2/#{@algorithm}"\
+              " --config assignment2/#{@algorithm}/#{@config}.txt"\
               ' --compile'
