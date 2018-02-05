@@ -17,18 +17,20 @@ public class ByzantineGenerals extends BasicAlgorithm
     int id;
     Boolean commander;
     Boolean traitor;
+    Boolean terminated;
     MessageTree receivedCommands;
 
     static int messageCounter = 0;
 
-    public static String initialCommand = "attack";
-    public static int[] traitors = {0,3};
+    public static String initialCommand = "retreat";
+    public static int[] traitors = {1};
 
     public void setup(java.util.Map<String, Object> config)
         {
             id = (int) config.get("node.id");
             commander = (id == 0);
             receivedCommands = new MessageTree("", "");
+            terminated = false;
 
             traitor = false;
             for (int i = 0; i < traitors.length; ++i) {
@@ -80,7 +82,9 @@ public class ByzantineGenerals extends BasicAlgorithm
                 HashSet<Integer> remainingReceivers = new HashSet<Integer>();
                 remainingReceivers.addAll(message.receivers());
                 remainingReceivers.remove(id);
-                start(message.traitorCount() - 1, message.receivers(), id + ":" + message.receiverChain, message.command);
+                start(message.traitorCount() - 1, remainingReceivers, id + ":" + message.receiverChain, message.command);
+            } else {
+                terminated = true;
             }
             updateView();
         }
@@ -103,7 +107,10 @@ public class ByzantineGenerals extends BasicAlgorithm
             if (commander == true) {
                 caption = "#" + id + " " + initialCommand;
             }
-            if (commander == false) {
+            if (commander == false && terminated == false) {
+                caption = "#" + id;
+            }
+            if (commander == false && terminated == true) {
                 caption = "#" + id + " " + receivedCommands.result();
             }
         }
@@ -154,9 +161,10 @@ public class ByzantineGenerals extends BasicAlgorithm
             Iterator childrenIterator = children.iterator();
             while (childrenIterator.hasNext()) {
                 MessageTree child = (MessageTree) childrenIterator.next();
-                child.receiverChain.equals(":" + postfix);
-                child.add(rc, c);
-                return;
+                if (postfix.endsWith(":" + child.receiverChain)) {
+                    child.add(rc, c);
+                    return;
+                }
             }
             children.add(new MessageTree(rc, c));
         }

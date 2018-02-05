@@ -1,6 +1,6 @@
 [graph.random]
 teachnet.util.FullyMeshedGraphGenerator
-n=java.lang.Integer:7
+n=java.lang.Integer:4
 
 [network]
 teachnet.network.LinearDelayNetwork
