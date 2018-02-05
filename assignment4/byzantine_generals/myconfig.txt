@@ -1,0 +1,17 @@
+[graph.random]
+teachnet.util.FullyMeshedGraphGenerator
+n=java.lang.Integer:7
+
+[network]
+teachnet.network.LinearDelayNetwork
+delay.min=java.lang.Double:0.8
+delay.max=java.lang.Double:2.0
+
+[stack.algorithms]
+ByzantineGenerals
+
+[stack.configs]
+0.node.id=java.lang.String:$node.id
+
+[inits]
+0,0,0.0
