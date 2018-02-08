@@ -14,15 +14,28 @@ public class ByzantineGenerals extends BasicAlgorithm
     String caption;
     Color color;
 
+    // the node's id
     int id;
+    // True determines the node to be a commander. There is only one
+    // commander, which has id 0.
     Boolean commander;
+    // True determines the node to be a traitor. A node will be a
+    // traitor when the traitors array includes its id.
     Boolean traitor;
+    // When there are no more messages to send, the algorithm
+    // terminates, see receive method.
     Boolean terminated;
+    // This object holds all the received commands that are either
+    // 'attack' or 'retreat' commands. The path or chain of the
+    // receivers determines the location in the tree.
     MessageTree receivedCommands;
 
+    // Simply counts all sent messages.
     static int messageCounter = 0;
 
+    // Configures the initial command which the commander sends.
     public static String initialCommand = "retreat";
+    // Configures the nodes, which are traitors.
     public static int[] traitors = {1};
 
     public void setup(java.util.Map<String, Object> config)
@@ -41,18 +54,24 @@ public class ByzantineGenerals extends BasicAlgorithm
 
             updateView();
         }
+
     public void initiate()
+    // Only the commander executes the 'initiate' method that sends a
+    // command to each general.
         {
             if (commander == true) {
+                // receivers = {1, 2, ..., n}
                 HashSet<Integer> receivers = new HashSet<Integer>();
                 for (int i = 1; i < checkInterfaces(); i++) {
                     receivers.add(i);
                 }
-                start(traitors.length, receivers, id + "", maybeHonest(initialCommand));
+                sendTo(traitors.length, receivers, id + "", maybeHonest(initialCommand));
             }
             updateView();
         }
-    public void start(int traitorCount, HashSet<Integer> receivers, String receiverChain, String command)
+
+    public void sendTo(int traitorCount, HashSet<Integer> receivers, String receiverChain, String command)
+    // Sends commands to all the receivers.
     {
         Iterator receiverIterator = receivers.iterator();
         while (receiverIterator.hasNext()) {
@@ -61,7 +80,10 @@ public class ByzantineGenerals extends BasicAlgorithm
             send(receiver, message);
         }
     }
+
     public String maybeHonest(String command)
+    // Returns the given command if the node is no traitor, otherwise
+    // a random command.
     {
         if (traitor) {
             if (Math.random() <= 0.5) {
@@ -73,7 +95,10 @@ public class ByzantineGenerals extends BasicAlgorithm
             return command;
         }
     }
+
     public void receive(int interf, Object messageObject)
+    // Receives a command, appends it to the message tree and
+    // distributes the command to the remaining receivers.
         {
             Message message = (Message) messageObject;
             receivedCommands.add(message.receiverChain(), message.command());
@@ -82,9 +107,11 @@ public class ByzantineGenerals extends BasicAlgorithm
                 HashSet<Integer> remainingReceivers = new HashSet<Integer>();
                 remainingReceivers.addAll(message.receivers());
                 remainingReceivers.remove(id);
-                start(message.traitorCount() - 1, remainingReceivers, id + ":" + message.receiverChain, message.command);
+                sendTo(message.traitorCount() - 1, remainingReceivers, id + ":" + message.receiverChain, message.command);
             } else {
                 terminated = true;
+                System.out.println("\n#" + id);
+                receivedCommands.print(null);
             }
             updateView();
         }
@@ -114,10 +141,16 @@ public class ByzantineGenerals extends BasicAlgorithm
                 caption = "#" + id + " " + receivedCommands.result();
             }
         }
+
     private class Message {
+        // The algorithm decreases traitorCount in each recursion step.
         int traitorCount;
+        // The receiver of the message has to send the message to the
+        // receivers in this set.
         HashSet<Integer> receivers;
+        // The history or path of previous receivers.
         String receiverChain;
+        // Command is either attack or retreat.
         String command;
 
         Color color;
@@ -146,9 +179,13 @@ public class ByzantineGenerals extends BasicAlgorithm
         public String command() { return command; }
         public String toString() { return "#" + id + " " + receiverChain + ":" + command; }
     }
+
     private class MessageTree {
+        // Saves the historical path of previous senders. p.e. '6:2:0'
         private String receiverChain;
+        // Saves the command either 'apply' or 'retreat'.
         private String command;
+        // Saves the child trees.
         private List<MessageTree> children;
 
         public MessageTree(String rc, String c) {
@@ -156,7 +193,10 @@ public class ByzantineGenerals extends BasicAlgorithm
             command = c;
             children = new ArrayList<MessageTree>();
         }
-        public void add(String rc, String c) {
+
+        public void add(String rc, String c)
+        // Adds a command in the tree in the correct location.
+        {
             String postfix = rc.substring(1, rc.length());
             Iterator childrenIterator = children.iterator();
             while (childrenIterator.hasNext()) {
@@ -168,7 +208,10 @@ public class ByzantineGenerals extends BasicAlgorithm
             }
             children.add(new MessageTree(rc, c));
         }
-        public String result() {
+
+        public String result()
+        // Calculates the result for a tree, either 'attack' or 'retreat'.
+        {
             Iterator childrenIterator = children.iterator();
             int attackCount = 0;
             int retreatCount = 0;
@@ -183,6 +226,22 @@ public class ByzantineGenerals extends BasicAlgorithm
                 return "retreat";
             } else {
                 return "attack";
+            }
+        }
+
+        public void print(String spaces)
+        {
+            if (spaces == null) { spaces = ""; }
+            Iterator childrenIterator = children.iterator();
+            // command == '' -> root
+            String newspaces = spaces;
+            if (command != "") {
+                System.out.println(spaces + "+" + command);
+                newspaces = newspaces + "|";
+            }
+            while (childrenIterator.hasNext()) {
+                MessageTree child = (MessageTree) childrenIterator.next();
+                child.print(newspaces);
             }
         }
     }
