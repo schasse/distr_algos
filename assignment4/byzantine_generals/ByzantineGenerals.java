@@ -36,7 +36,7 @@ public class ByzantineGenerals extends BasicAlgorithm
     // Configures the initial command which the commander sends.
     public static String initialCommand = "attack";
     // Configures the nodes, which are traitors.
-    public static int[] traitors = {0, 3};
+    public static int[] traitors = {0, 5};
 
     public void setup(java.util.Map<String, Object> config)
         {
@@ -65,7 +65,7 @@ public class ByzantineGenerals extends BasicAlgorithm
                 for (int i = 1; i < checkInterfaces(); i++) {
                     receivers.add(i);
                 }
-                sendTo(traitors.length, receivers, id + "", maybeHonest(initialCommand));
+                sendTo(traitors.length, receivers, id + "", initialCommand);
             }
             updateView();
         }
@@ -191,7 +191,7 @@ public class ByzantineGenerals extends BasicAlgorithm
     private class MessageTree {
         // Saves the historical path of previous senders. p.e. '6:2:0'
         private String receiverChain;
-        // Saves the command either 'apply' or 'retreat'.
+        // Saves the command either 'attack' or 'retreat'.
         private String command;
         // Saves the child trees.
         private List<MessageTree> children;
@@ -244,7 +244,7 @@ public class ByzantineGenerals extends BasicAlgorithm
             // command == '' -> root
             String newspaces = spaces;
             if (command != "") {
-                System.out.println(spaces + "+" + command);
+                System.out.println(spaces + "+" + receiverChain + ":" + command);
                 newspaces = newspaces + "|";
             }
             while (childrenIterator.hasNext()) {
