@@ -34,9 +34,9 @@ public class ByzantineGenerals extends BasicAlgorithm
     static int messageCounter = 0;
 
     // Configures the initial command which the commander sends.
-    public static String initialCommand = "retreat";
+    public static String initialCommand = "attack";
     // Configures the nodes, which are traitors.
-    public static int[] traitors = {1};
+    public static int[] traitors = {0, 3};
 
     public void setup(java.util.Map<String, Object> config)
         {
@@ -85,15 +85,23 @@ public class ByzantineGenerals extends BasicAlgorithm
     // Returns the given command if the node is no traitor, otherwise
     // a random command.
     {
-        if (traitor) {
+        if (traitor && commander) {
             if (Math.random() <= 0.5) {
                 return "attack";
             } else {
                 return "retreat";
             }
-        } else {
-            return command;
         }
+        if (traitor && !commander) {
+            if (command == "attack") {
+                return "retreat";
+            }
+            if (command == "retreat") {
+                return "attack";
+            }
+        }
+        //if (!traitor)
+        return command;
     }
 
     public void receive(int interf, Object messageObject)
