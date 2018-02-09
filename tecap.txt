@@ -1,0 +1,29 @@
+# this is a recap session where significant info regarding the exam will be introduced:
+###
+
+In detail explained on the slides
+
+Model
+Logical clocks
+Wave algorithms
+Election algorithms
+Mutual exclusion
+Snapshot
+
+
+for each presented algorithm
+	What does it do
+	How does it do it
+	Worst case scenarios?(complexity, when will it happen?)
+
+Grid computing - cloud computing differences
+ubiquous & mobile computing
+
+MA 004 -23.02.2018.
+Closed book - questions
+50% from the exam
+50% from assignemnts
+
+Questions:
+	Multiple choice
+	open questions - describe the algorithm, application,... (easyer than assignemnt problems)
